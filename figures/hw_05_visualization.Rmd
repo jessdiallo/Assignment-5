@@ -1,3 +1,10 @@
+---
+title: "FISH 497 Homework #5"
+author: "Jessica Diallo"
+date: "120February 2021"
+output: pdf_document
+---
+
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
@@ -45,30 +52,20 @@ A data frame with 780 observations on the following 8 variables.
 
 ***
 
-# Using R Markdown
+```{r load_data, include=FALSE}
+library(tidyverse)
+data <- read.csv(file = "data/siscowet.csv")
 
-You are welcome to use **R Markdown** to complete this assignment, but if you'd rather not, I will also happily accept a combination of an `.R` script with your plotting code and a saved version of your figure in a format such as `.png`, `.jpg`, or `.pdf`. If you'd like a primer on **R Markdown**, click [here](../../lectures/week_07/intro_rmarkdown.html).
-
-***
-
-# Task 1
-
-Create a new repo on **GitHub** called `Assignment-5` and populate it with a short `README.md` document that briefly describes your assignment. 
-
-Your repo should ultimately contain the following structure:
-
-* a folder `data` that includes the `.csv` file for the assignment
-
-* a folder `figures` that should include your `.Rmd` or `.R` files used for creating your figures, and any saved figures you might generate
+```
 
 
-# Task 2
+# Exploratory Figure
 
-Create a new project in **RStudio** from the repo you created in **Task 1**, and work from there to create and edit your code for cleaning and plotting the data. Make sure to commit any changes and push them up to your remote repo.
+```{r figure 1}
 
-# Task 3
 
-When you are finished with your assignment, create a new issue within your `Assignment-5` repo that briefly describes what you've done, and tag Mark in the issue so he knows when you're finished.
 
+
+```
 
 
