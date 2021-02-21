@@ -1,8 +1,9 @@
 ---
-title: "FISH 497 Homework #5"
+title: 'FISH 497 Homework #5'
 author: "Jessica Diallo"
-date: "120February 2021"
-output: pdf_document
+date: "20 February 2021"
+output:
+  pdf_document
 ---
 
 ```{r setup, include=FALSE}
@@ -54,18 +55,75 @@ A data frame with 780 observations on the following 8 variables.
 
 ```{r load_data, include=FALSE}
 library(tidyverse)
-data <- read.csv(file = "data/siscowet.csv")
-
+library(here)
+library(ggplot2)
+library(ggExtra)
+here("/Users/jessicadiallo/GitHub/Assignment-5/")
+data <- read_csv(here("data", "siscowet.csv"))
 ```
 
 
-# Exploratory Figure
+# Exploratory Figures
 
 ```{r figure 1}
 
+ggplot(data, aes(x=len, y=wgt, color=sex, size=age)) +
+  geom_point()
 
+# there's one point that looks like a mistake because the weight value is almost 
+# an order of magnitude higher than the other points
+# so I'm going to remove that point
+summary(data$wgt)
+data[which(data$wgt == 15800),"wgt"] <- NA
 
-
+ggplot(data, aes(x=len, y=wgt, color=sex, size=age)) +
+  geom_point()
 ```
 
+\newpage
+
+# Expository Figure
+
+I created this expository figure to show the relationship between length and weight of Siscowet Lake Trout. Males and females are separated by color, and the distribution of values for length and weight are shown as histograms. Linear regression lines are displayed separately for males and females.
+
+```{r figure2, include = FALSE}
+
+plot2 <- ggplot(data, aes(x=len, y=wgt, color=sex, size=age)) +
+  geom_point() +
+  scale_color_manual(values=c("#7570b3", "#fc8d62")) +
+  theme(legend.position="none") +
+  labs(x = "Total Length (mm)", y = "Weight (g)") + 
+  scale_radius(range = c(1,6)) +
+  geom_smooth(method='lm', level = 0) +
+  xlim(350, 700) + 
+  annotate(geom="text", x=425, y=1500, label="Male",
+              color="#fc8d62") + 
+   annotate(geom="text", x=600, y=3500, label="Female",
+              color="#7570b3")
+
+# with marginal histogram
+plot3 <- ggMarginal(plot2, type="histogram")
+
+# 1. Open jpeg file
+jpeg("rplot.jpg", width = 600, height = 500)
+# 2. Create the plot
+plot2 <- ggplot(data, aes(x=len, y=wgt, color=sex, size=age)) +
+  geom_point() +
+  scale_color_manual(values=c("#7570b3", "#fc8d62")) +
+  theme(legend.position="none") +
+  labs(x = "Total Length (mm)", y = "Weight (g)") + 
+  scale_radius(range = c(1,6)) +
+  geom_smooth(method='lm', level = 0) +
+  xlim(350, 700) + 
+  annotate(geom="text", x=425, y=1500, label="Male",
+              color="#fc8d62") + 
+   annotate(geom="text", x=600, y=3500, label="Female",
+              color="#7570b3")
+ggMarginal(plot2, type="histogram")
+# 3. Close the file
+dev.off()
+```
+
+
+![Expository figure of Siscowet Lake Trout weight as a function of length. Point size reflects relative fish age.](/Users/jessicadiallo/GitHub/Assignment-5/figures/rplot.jpg)
 
